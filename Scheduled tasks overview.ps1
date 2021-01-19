@@ -59,8 +59,7 @@ Process {
             To        = $MailTo
             Bcc       = $ScriptAdmin
             Subject   = "$($tasksToExport.Count) scheduled tasks"
-            Message   = "<p>A total of <b>$($tasksToExport.Count) scheduled tasks</b> with state 'Enabled' have been found in folder '$($TaskPath)'.</p>
-            <p><i>* Check the attachment for details</i></p>"
+            Message   = "<p>A total of <b>$($tasksToExport.Count) scheduled tasks</b> with state 'Enabled' have been found in folder '$($TaskPath)'.</p>"
             LogFolder = $logParams.LogFolder
             Header    = $ScriptName
             Save      = $logFile + ' - Mail.html'
@@ -82,6 +81,7 @@ Process {
             Export-Excel @excelParams
 
             $emailParams.Attachments = $excelParams.Path
+            $emailParams.Message += "<p><i>* Check the attachment for details</i></p>"
         }
 
         Get-ScriptRuntimeHC -Stop
