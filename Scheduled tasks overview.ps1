@@ -59,7 +59,7 @@ Process {
         $emailParams = @{
             To        = $MailTo
             Bcc       = $ScriptAdmin
-            Subject   = "$($tasksToExport.Count) scheduled tasks"
+            Subject   = "$($tasksToExport.Count) scheduled tasks in '$TaskPath'"
             Message   = "<p>A total of <b>$($tasksToExport.Count) scheduled tasks</b> with state 'Enabled' have been found in folder '$($TaskPath)'.</p>"
             LogFolder = $logParams.LogFolder
             Header    = $ScriptName

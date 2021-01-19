@@ -105,7 +105,7 @@ Describe 'when the script runs' {
             Should -Invoke Send-MailHC -Times 1 -Exactly -Scope Describe -ParameterFilter {
                 ($To -eq 'bob@contoso.com') -and
                 ($Bcc -eq $ScriptAdmin) -and
-                ($Subject -eq '2 scheduled tasks') -and
+                ($Subject -eq "2 scheduled tasks in 'contosoTasks'") -and
                 ($Message -like "*2 scheduled tasks*Enabled*") -and
                 ($LogFolder) -and
                 ($Header -eq $ScriptName) -and
