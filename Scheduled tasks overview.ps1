@@ -11,9 +11,6 @@
 
 .PARAMETER MailTo
     List of e-mail addresses where the e-mail will be sent.
-
-.NOTES
-    2021/01/18 Script born
 #>
 
 [CmdLetBinding()]
