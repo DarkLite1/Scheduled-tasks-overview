@@ -16,9 +16,9 @@
 [CmdLetBinding()]
 Param (
     [Parameter(Mandatory)]
-    [String]$ScriptName = 'Scheduled task overview (BNL)',
+    [String]$ScriptName,
     [Parameter(Mandatory)]
-    [String]$TaskPath = 'PowerShell scripts',
+    [String]$TaskPath,
     [Parameter(Mandatory)]
     [String[]]$MailTo = @(),
     [String]$LogFolder = "\\$env:COMPUTERNAME\Log",
@@ -56,14 +56,14 @@ Process {
         $tasksToExport = $tasks | Where-Object State -NE Disabled
 
         $emailParams = @{
-            To          = $MailTo
-            Bcc         = $ScriptAdmin
-            Subject     = "$($tasksToExport.Count) scheduled tasks"
-            Message     = "<p>A total of <b>$($tasksToExport.Count) scheduled tasks</b> with state <b>Enabled</b> are exported.</p>
+            To        = $MailTo
+            Bcc       = $ScriptAdmin
+            Subject   = "$($tasksToExport.Count) scheduled tasks"
+            Message   = "<p>A total of <b>$($tasksToExport.Count) scheduled tasks</b> with state 'Enabled' have been found in folder '$($TaskPath)'.</p>
             <p><i>* Check the attachment for details</i></p>"
-            LogFolder   = $logParams.LogFolder
-            Header      = $ScriptName
-            Save        = $logFile + ' - Mail.html'
+            LogFolder = $logParams.LogFolder
+            Header    = $ScriptName
+            Save      = $logFile + ' - Mail.html'
         }
 
         if ($tasksToExport) {
