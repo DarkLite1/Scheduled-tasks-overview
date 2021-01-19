@@ -54,6 +54,7 @@ Process {
         Write-Verbose "Retrieved $($tasks.Count) tasks in folder '$TaskPath'"
     
         $tasksToExport = $tasks | Where-Object State -NE Disabled
+        Write-EventLog @EventVerboseParams -Message "Enabled scheduled tasks: $($tasksToExport.Count)"
 
         $emailParams = @{
             To        = $MailTo
@@ -69,6 +70,7 @@ Process {
             Foreach ($task in $tasksToExport) {
                 Write-Verbose "TaskName '$($task.TaskName)' TaskPath '$($task.TaskPath)' State '$($task.State)'"
             }
+            Write-EventLog @EventOutParams -Message "Export $($tasksToExport.Count) scheduled tasks to Excel"
 
             $excelParams = @{
                 Path          = $LogFile + '.xlsx'
