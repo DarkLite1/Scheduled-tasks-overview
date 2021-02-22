@@ -4,7 +4,8 @@
 
 .DESCRIPTION
     Collect a list of all scheduled tasks with state 'Enabled'. Send this 
-    list by e-mail to the users. This can be useful as an overview for the management. 
+    list by e-mail to the users. This can be useful as an overview for the 
+    management. 
 
 .PARAMETER TaskPath
     The folder in the Task Scheduler in which the tasks are stored.
