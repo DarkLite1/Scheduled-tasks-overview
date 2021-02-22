@@ -21,8 +21,8 @@ Param (
     [String]$TaskPath,
     [Parameter(Mandatory)]
     [String[]]$MailTo = @(),
-    [String]$LogFolder = "\\$env:COMPUTERNAME\Log",
-    [String]$ScriptAdmin = 'Brecht.Gijbels@heidelbergcement.com'
+    [String]$LogFolder = $env:POWERSHELL_LOG_FOLDER,
+    [String]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
 )
 
 Begin {
