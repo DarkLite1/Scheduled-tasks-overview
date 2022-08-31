@@ -38,7 +38,8 @@ BeforeAll {
 
 Describe 'the mandatory parameters are' {
     It "<_>" -ForEach @('ScriptName', 'TaskPath', 'MailTo') {
-        (Get-Command $testScript).Parameters[$_].Attributes.Mandatory | Should -BeTrue
+        (Get-Command $testScript).Parameters[$_].Attributes.Mandatory |
+        Should -BeTrue
     }
 }
 
