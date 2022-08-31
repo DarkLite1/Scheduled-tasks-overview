@@ -21,9 +21,9 @@ Param (
     [Parameter(Mandatory)]
     [String]$TaskPath,
     [Parameter(Mandatory)]
-    [String[]]$MailTo = @(),
+    [String[]]$MailTo,
     [String]$LogFolder = "$env:POWERSHELL_LOG_FOLDER\Application specific\Windows task scheduler\$ScriptName",
-    [String]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
+    [String[]]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
 )
 
 Begin {
