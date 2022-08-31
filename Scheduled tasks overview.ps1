@@ -56,15 +56,19 @@ Begin {
 }
 Process {
     Try {
+        #region Get scheduled tasks
         $M = "Get scheduled tasks in folder '$TaskPath'"
         Write-Verbose $M; Write-EventLog @EventVerboseParams -Message $M
 
         $tasks = Get-ScheduledTask -TaskPath "\$TaskPath\*"
-    
+        #endregion
+
+        #region Filter only Enabled tasks
         $tasksToExport = $tasks | Where-Object State -NE Disabled
         
         $M = "Enabled scheduled tasks: $($tasksToExport.Count)"
         Write-Verbose $M; Write-EventLog @EventVerboseParams -Message $M
+        #endregion
 
         $mailParams = @{
             To        = $MailTo
@@ -76,6 +80,7 @@ Process {
             Save      = "$logFile - Mail.html"
         }
 
+        #region Export tasks to Excel file
         if ($tasksToExport) {
             $tasksToExport | ForEach-Object {
                 $M = "TaskName '{0}' TaskPath '{1}' State '{2}'" -f
@@ -102,6 +107,7 @@ Process {
             $mailParams.Attachments = $excelParams.Path
             $mailParams.Message += "<p><i>* Check the attachment for details</i></p>"
         }
+        #endregion
 
         Get-ScriptRuntimeHC -Stop
         Send-MailHC @mailParams
