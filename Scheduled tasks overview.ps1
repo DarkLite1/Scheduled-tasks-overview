@@ -90,13 +90,13 @@ Process {
                 WorkSheetName = 'Tasks'
                 TableName     = 'Tasks'
             }
-            
+
             $M = "Export {0} scheduled tasks to Excel file '{1}'" -f
             $($tasksToExport.Count), $excelParams.Path
             Write-Verbose $M; Write-EventLog @EventOutParams -Message $M
 
             $tasksToExport |
-            Select-Object TaskName, TaskPath, State, Description |
+            Select-Object -Property TaskName, TaskPath, State, Description |
             Export-Excel @excelParams
 
             $mailParams.Attachments = $excelParams.Path
