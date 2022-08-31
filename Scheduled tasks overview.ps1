@@ -66,7 +66,7 @@ Process {
         $M = "Enabled scheduled tasks: $($tasksToExport.Count)"
         Write-Verbose $M; Write-EventLog @EventVerboseParams -Message $M
 
-        $emailParams = @{
+        $mailParams = @{
             To        = $MailTo
             Bcc       = $ScriptAdmin
             Subject   = "$($tasksToExport.Count) scheduled tasks in '$TaskPath'"
@@ -93,15 +93,16 @@ Process {
                 WorkSheetName = 'Tasks'
                 TableName     = 'Tasks'
             }
-            $tasksToExport | Select-Object TaskName, TaskPath, State, Description | 
+            $tasksToExport |
+            Select-Object TaskName, TaskPath, State, Description |
             Export-Excel @excelParams
 
-            $emailParams.Attachments = $excelParams.Path
-            $emailParams.Message += "<p><i>* Check the attachment for details</i></p>"
+            $mailParams.Attachments = $excelParams.Path
+            $mailParams.Message += "<p><i>* Check the attachment for details</i></p>"
         }
 
         Get-ScriptRuntimeHC -Stop
-        Send-MailHC @emailParams
+        Send-MailHC @mailParams
     }
     Catch {
         Write-Warning $_
