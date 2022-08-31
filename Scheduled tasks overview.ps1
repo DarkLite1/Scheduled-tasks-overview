@@ -77,9 +77,9 @@ Process {
         }
 
         if ($tasksToExport) {
-            Foreach ($task in $tasksToExport) {
+            $tasksToExport | ForEach-Object {
                 $M = "TaskName '{0}' TaskPath '{1}' State '{2}'" -f
-                $($task.TaskName), $($task.TaskPath), $($task.State)
+                $($_.TaskName), $($_.TaskPath), $($_.State)
                 Write-Verbose $M
             }
             
