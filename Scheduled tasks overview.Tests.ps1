@@ -111,7 +111,7 @@ Describe 'when the script runs' {
                 ($LogFolder) -and
                 ($Header -eq $ScriptName) -and
                 ($Save -like '* - Mail.html') -and
-                ($Attachments -like '*.xlsx')
+                ($Attachments -like '* - Overview.xlsx')
             }
         }
     }
