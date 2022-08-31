@@ -28,7 +28,7 @@ BeforeAll {
         ScriptName = 'Test'
         TaskPath   = 'contosoTasks'
         MailTo     = 'bob@contoso.com'
-        LogFolder  = (New-Item -Path 'TestDrive:\Log' -ItemType Directory).FullName
+        LogFolder  = 'TestDrive:\Log'
     }
 
     Mock Get-ScheduledTask
@@ -72,7 +72,7 @@ Describe 'when the script runs' {
         .$testScript @testParams
     }
     It "The log folder 'Scheduled tasks' is created" {
-        'TestDrive:\Log\Scheduled tasks' | Should -Exist
+        $testParams.LogFolder | Should -Exist
     }
     It 'Get-ScheduledTask is called' {
         Should -Invoke Get-ScheduledTask -Times 1 -Exactly -Scope Describe -ParameterFilter {
@@ -88,7 +88,7 @@ Describe 'when the script runs' {
     }
     Context 'An Excel file is created' {
         BeforeAll {
-            $testExportedExcelFile = (Get-ChildItem 'TestDrive:\Log\Scheduled tasks\Test' -Filter '*.xlsx').FullName
+            $testExportedExcelFile = (Get-ChildItem $testParams.LogFolder -Filter '*.xlsx').FullName
         }
         It 'in the log folder' {
             $testExportedExcelFile | Should -Exist

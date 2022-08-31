@@ -22,7 +22,7 @@ Param (
     [String]$TaskPath,
     [Parameter(Mandatory)]
     [String[]]$MailTo = @(),
-    [String]$LogFolder = $env:POWERSHELL_LOG_FOLDER,
+    [String]$LogFolder = "$env:POWERSHELL_LOG_FOLDER\Application specific\Windows task scheduler\$ScriptName",
     [String]$ScriptAdmin = $env:POWERSHELL_SCRIPT_ADMIN
 )
 
@@ -33,13 +33,18 @@ Begin {
         Write-EventLog @EventStartParams
 
         #region Logging
-        $logParams = @{
-            LogFolder    = New-FolderHC -Path $LogFolder -ChildPath "Scheduled tasks\\$ScriptName"
-            Name         = $ScriptName
-            Date         = 'ScriptStartTime'
-            NoFormatting = $true
+        try {
+            $logParams = @{
+                LogFolder    = New-Item -Path $LogFolder -ItemType 'Directory' -Force -ErrorAction 'Stop'
+                Name         = $ScriptName
+                Date         = 'ScriptStartTime'
+                NoFormatting = $true
+            }
+            $logFile = New-LogFileNameHC @LogParams
         }
-        $logFile = New-LogFileNameHC @LogParams
+        Catch {
+            throw "Failed creating the log folder '$LogFolder': $_"
+        }
         #endregion
     }
     catch {
