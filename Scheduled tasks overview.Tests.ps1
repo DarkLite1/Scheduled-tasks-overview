@@ -25,10 +25,11 @@ BeforeAll {
 
     $testScript = $PSCommandPath.Replace('.Tests.ps1', '.ps1')
     $testParams = @{
-        ScriptName = 'Test'
-        TaskPath   = 'contosoTasks'
-        MailTo     = 'bob@contoso.com'
-        LogFolder  = 'TestDrive:\Log'
+        ScriptName  = 'Test'
+        TaskPath    = 'contosoTasks'
+        MailTo      = 'bob@contoso.com'
+        LogFolder   = 'TestDrive:\Log'
+        ScriptAdmin = 'admin@contoso,com'
     }
 
     Mock Get-ScheduledTask
@@ -105,7 +106,7 @@ Describe 'when the script runs' {
         It 'with the Excel file in attachment' {
             Should -Invoke Send-MailHC -Times 1 -Exactly -Scope Describe -ParameterFilter {
                 ($To -eq 'bob@contoso.com') -and
-                ($Bcc -eq $ScriptAdmin) -and
+                ($Bcc -eq $testParams.ScriptAdmin) -and
                 ($Subject -eq "2 scheduled tasks in 'contosoTasks'") -and
                 ($Message -like "*2 scheduled tasks*Enabled*") -and
                 ($LogFolder) -and
